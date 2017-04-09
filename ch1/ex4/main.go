@@ -12,6 +12,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -33,8 +34,8 @@ func main() {
 		}
 	}
 	for line, n := range counts {
-		if n > 1 {
-			fmt.Printf("%d\t%s\n", n, line)
+		if n >= 1 {
+			fmt.Printf("%d\t%s\t\t\t::", n, line)
 			fmt.Printf("%s\n", filenames[line])
 		}
 	}
@@ -44,7 +45,10 @@ func countLines(f *os.File, counts map[string]int, filenames map[string]string) 
 	input := bufio.NewScanner(f)
 	for input.Scan() {
 		counts[input.Text()]++
-		filenames[input.Text()] += f.Name()
+		if strings.Index( filenames[input.Text()], f.Name()) == -1 {
+		   filenames[input.Text()] += "," + f.Name()
+		}
+
 	}
 	// NOTE: ignoring potential errors from input.Err()
 }
