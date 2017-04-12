@@ -29,7 +29,9 @@ func main() {
 			os.Exit(1)
 		}
 
-		if _, err := io.Copy( os.Stderr, resp.Body ); err != nil {
+		fmt.Println( "Status=" + resp.Status );
+
+		if _, err := io.Copy( os.Stdout, resp.Body ); err != nil {
 		   fmt.Println( err )
 		}
 	}

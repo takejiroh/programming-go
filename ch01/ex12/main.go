@@ -74,13 +74,14 @@ func lissajous(out io.Writer, req *http.Request) {
 	size := 100
 	nframes := 64
 	delay :=8
+	err:=0
 
 	if req != nil {
 	   req.ParseForm()
 	   for k, v := range req.Form {
 	       if k == "cycles" {
 	       	  fmt.Println( v )
-		  cycles = strconv.Atoi(v)
+		  cycles, _ := strconv.ParseFloat(v[0], 64)
 	       }
 	       if k == "res" {
 	       	  fmt.Println( v )

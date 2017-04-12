@@ -19,8 +19,11 @@ import (
 func main() {
 	for _, url := range os.Args[1:] {
 	        if !strings.HasPrefix( url, "http://" ) {
+		   fmt.Println( "add http:// prefix." )
 		   url = "http://" + url
 		   //fmt.Println( url)
+		}else{
+		   fmt.Println( "don't add prefix." )
 		}
 
 		resp, err := http.Get(url)
@@ -29,9 +32,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		fmt.Println( "Status=" + resp.Status );
-
-		if _, err := io.Copy( os.Stderr, resp.Body ); err != nil {
+		if _, err := io.Copy( os.Stdout, resp.Body ); err != nil {
 		   fmt.Println( err )
 		}
 	}
